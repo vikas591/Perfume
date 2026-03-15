@@ -5,7 +5,7 @@ const products = [
         name: "Midnight Rose",
         brand: "Veess'Essence",
         price: 3500,
-        image: "https://images.unsplash.com/photo-1541643600914-78b084683601?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+        image: "assets/midnight_rose.png",
         description: "A mysterious blend of brooding florals and dark musk."
     },
     {
@@ -13,7 +13,7 @@ const products = [
         name: "Ocean Breeze",
         brand: "Veess'Essence",
         price: 2800,
-        image: "https://images.unsplash.com/photo-1523293188086-b5fa529c0af0?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+        image: "assets/ocean_breeze.png",
         description: "Fresh aquatic notes perfect for daily wear."
     },
     {
@@ -21,7 +21,7 @@ const products = [
         name: "Golden Amber",
         brand: "Veess'Essence",
         price: 4200,
-        image: "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+        image: "assets/golden_amber.png",
         description: "Rich, warm amber notes with a hint of vanilla."
     },
     {
@@ -29,7 +29,7 @@ const products = [
         name: "Citrus Grove",
         brand: "Veess'Essence",
         price: 2500,
-        image: "https://images.unsplash.com/photo-1594035910387-fea4779426e9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+        image: "assets/citrus_grove.png",
         description: "Zesty lemon and orange blossom scent."
     },
     {
@@ -37,7 +37,7 @@ const products = [
         name: "Velvet Santal",
         brand: "Veess'Essence",
         price: 5000,
-        image: "https://images.unsplash.com/photo-1615162454970-86ff74cb3cce?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+        image: "assets/velvet_santal.png",
         description: "Smooth sandalwood with spicy undertones."
     },
     {
@@ -45,7 +45,7 @@ const products = [
         name: "Jasmine Bloom",
         brand: "Veess'Essence",
         price: 3200,
-        image: "https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+        image: "assets/jasmine_bloom.png",
         description: "Intoxicating white floral fragrance."
     },
     {
@@ -53,7 +53,7 @@ const products = [
         name: "Royal Oud",
         brand: "Veess'Essence",
         price: 5500,
-        image: "https://images.unsplash.com/photo-1594122230689-45899d9e6f69?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+        image: "assets/royal_oud.png",
         description: "A majestic blend of agarwood and rare spices."
     },
     {
@@ -61,7 +61,7 @@ const products = [
         name: "Vanilla Dreams",
         brand: "Veess'Essence",
         price: 2900,
-        image: "https://images.unsplash.com/photo-1616604426209-f9f38f1ea203?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+        image: "assets/vanilla_dreams.png",
         description: "Warm vanilla bean with a touch of creamy caramel."
     },
     {
@@ -69,7 +69,7 @@ const products = [
         name: "Wild Orchid",
         brand: "Veess'Essence",
         price: 3800,
-        image: "https://images.unsplash.com/photo-1550547660-d9450f859349?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+        image: "assets/wild_orchid.png",
         description: "Exotic orchid notes combined with subtle fruitiness."
     }
 ];
