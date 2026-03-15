@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Veess'Essence</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .admin-container {
+            padding: 100px 20px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .data-table th {
+            background-color: var(--secondary-color);
+            color: white;
+            font-weight: 500;
+        }
+
+        .data-table tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .btn-danger {
+            background-color: #ff4757;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-danger:hover {
+            background-color: #ff6b81;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Reuse Nav for consistency -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">Veess'<span>ESSENCE</span> Admin</a>
+            <div class="nav-icons">
+                <a href="index.html" title="Back to Shop">
+                    <i class="fas fa-home"></i> Back to Shop
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="admin-container">
+        <div class="admin-header">
+            <div>
+                <h1>Admin Dashboard</h1>
+                <div style="margin-top: 15px;">
+                    <button onclick="switchAdminTab('users')" id="btn-users" class="btn-nav active"
+                        style="background-color: var(--primary-color); color: white; padding: 10px 20px; border-radius: 4px; border: none; cursor: pointer; margin-right: 10px; font-weight: 600;">Registered
+                        Users</button>
+                    <button onclick="switchAdminTab('orders')" id="btn-orders" class="btn-nav"
+                        style="background-color: #f1f1f1; color: #333; padding: 10px 20px; border-radius: 4px; border: none; cursor: pointer; font-weight: 600;">All
+                        Orders</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Users Section -->
+        <div id="section-users">
+            <div style="display: flex; justify-content: flex-end; margin-bottom: 10px;">
+                <button onclick="clearUsers()" class="btn-danger"><i class="fas fa-trash"></i> Delete All Users</button>
+            </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Password</th>
+                        <th>Joined</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="user-table-body">
+                    <!-- User Data goes here -->
+                </tbody>
+            </table>
+            <p id="no-users-msg" style="text-align: center; margin-top: 30px; display: none; color: #777;">No registered
+                users found.</p>
+        </div>
+
+        <!-- Orders Section -->
+        <div id="section-orders" style="display: none;">
+            <div style="display: flex; justify-content: flex-end; margin-bottom: 10px;">
+                <button onclick="clearOrders()" class="btn-danger"><i class="fas fa-trash"></i> Delete All
+                    Orders</button>
+            </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Date</th>
+                        <th>Items</th>
+                        <th>Total</th>
+                        <th>Payment</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="orders-table-body">
+                    <!-- Order Data goes here -->
+                </tbody>
+            </table>
+            <p id="no-orders-msg" style="text-align: center; margin-top: 30px; display: none; color: #777;">No orders
+                found.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            renderUsers();
+            renderOrders();
+        });
+
+        function switchAdminTab(tab) {
+            // Update Buttons
+            document.getElementById('btn-users').style.backgroundColor = tab === 'users' ? 'var(--primary-color)' : '#f1f1f1';
+            document.getElementById('btn-users').style.color = tab === 'users' ? 'white' : '#333';
+
+            document.getElementById('btn-orders').style.backgroundColor = tab === 'orders' ? 'var(--primary-color)' : '#f1f1f1';
+            document.getElementById('btn-orders').style.color = tab === 'orders' ? 'white' : '#333';
+
+            // Show/Hide Sections
+            document.getElementById('section-users').style.display = tab === 'users' ? 'block' : 'none';
+            document.getElementById('section-orders').style.display = tab === 'orders' ? 'block' : 'none';
+        }
+
+        /* --- User Logic --- */
+        function renderUsers() {
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const tbody = document.getElementById('user-table-body');
+            const noData = document.getElementById('no-users-msg');
+
+            tbody.innerHTML = '';
+
+            if (users.length === 0) {
+                noData.style.display = 'block';
+                return;
+            }
+            noData.style.display = 'none';
+
+            users.forEach((user, index) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${user.name}</td>
+                    <td>${user.email}</td>
+                    <td>${user.phone || '-'}</td>
+                    <td style="font-family: monospace;">${user.password}</td>
+                    <td>${new Date().toLocaleDateString()}</td>
+                    <td>
+                        <button onclick="deleteUser(${index})" class="btn-danger" style="padding: 5px 10px; font-size: 0.8rem;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function deleteUser(index) {
+            if (confirm('Delete this user?')) {
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                if (currentUser && users[index].email === currentUser.email) {
+                    localStorage.removeItem('currentUser');
+                }
+                users.splice(index, 1);
+                localStorage.setItem('users', JSON.stringify(users));
+                renderUsers();
+            }
+        }
+
+        function clearUsers() {
+            if (confirm('Are you sure you want to delete ALL registered users? This cannot be undone.')) {
+                localStorage.removeItem('users');
+                localStorage.removeItem('currentUser');
+                renderUsers();
+                alert('All users cleared.');
+            }
+        }
+
+        /* --- Order Logic --- */
+        function renderOrders() {
+            const orders = JSON.parse(localStorage.getItem('orders')) || [];
+            const tbody = document.getElementById('orders-table-body');
+            const noData = document.getElementById('no-orders-msg');
+
+            orders.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            tbody.innerHTML = '';
+
+            if (orders.length === 0) {
+                noData.style.display = 'block';
+                return;
+            }
+            noData.style.display = 'none';
+
+            orders.forEach((order, index) => {
+                const date = new Date(order.date).toLocaleDateString();
+                const itemsSummary = order.items.map(i => `${i.name} (${i.size}) x${i.quantity}`).join(', ');
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-weight: bold; font-size: 0.8rem;">${order.id}</td>
+                    <td>
+                        <div>${order.shipping.name}</div>
+                        <div style="font-size: 0.75rem; color: #666;">${order.userEmail}</div>
+                    </td>
+                    <td>${date}</td>
+                    <td style="font-size: 0.85rem; color: #444;">${itemsSummary}</td>
+                    <td style="font-weight: bold;">₹${order.total}</td>
+                    <td>${order.paymentMethod.split('(')[0]}</td>
+                    <td>
+                        <button onclick="cancelOrder(${index})" class="btn-warning" style="padding: 5px 10px; margin-right: 5px; background-color: #ff9800; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                            <i class="fas fa-ban"></i>
+                        </button>
+                        <button onclick="deleteOrder(${index})" class="btn-danger" style="padding: 5px 10px;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function cancelOrder(index) {
+            if (confirm('Are you sure you want to CANCEL this order? Status will be updated.')) {
+                const orders = JSON.parse(localStorage.getItem('orders')) || [];
+                // Sort to find the correct one as displayed
+                orders.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                orders[index].status = 'Cancelled';
+
+                const targetId = orders[index].id;
+
+                // Re-fetch original unsorted to update correctly
+                const originalOrders = JSON.parse(localStorage.getItem('orders')) || [];
+                const orderToUpdate = originalOrders.find(o => o.id === targetId);
+                if (orderToUpdate) {
+                    orderToUpdate.status = 'Cancelled';
+                    localStorage.setItem('orders', JSON.stringify(originalOrders));
+                    renderOrders();
+                }
+            }
+        }
+
+        function deleteOrder(index) {
+            if (confirm('Delete this order permanently?')) {
+                const orders = JSON.parse(localStorage.getItem('orders')) || [];
+                orders.sort((a, b) => new Date(b.date) - new Date(a.date));
+                orders.splice(index, 1);
+                localStorage.setItem('orders', JSON.stringify(orders));
+                renderOrders();
+            }
+        }
+
+        function clearOrders() {
+            if (confirm('Are you sure you want to delete ALL orders?')) {
+                localStorage.removeItem('orders');
+                renderOrders();
+                alert('All orders deleted.');
+            }
+        }
+    </script>
+</body>
+
+</html>

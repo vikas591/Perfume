@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Wishlist - Veess'Essence</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">Veess'<span>ESSENCE</span></a>
+            <div class="nav-icons">
+                <!-- Added icons here too so count is visible/consistent -->
+                <a href="#" class="icon-btn" title="User Profile">
+                    <i class="fas fa-user"></i>
+                </a>
+                <a href="wishlist.html" class="icon-btn" title="Wishlist">
+                    <i class="fas fa-heart"></i>
+                    <span class="wishlist-count">0</span>
+                </a>
+                <a href="index.html" class="icon-btn"><i class="fas fa-arrow-left"></i> Back to Shop</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Wishlist Section -->
+    <section class="container" style="padding: 3rem 0;">
+        <div class="section-title">
+            <h2>My Wishlist</h2>
+        </div>
+
+        <div id="wishlist-grid" class="products-grid">
+            <!-- Wishlist Items will be injected here -->
+        </div>
+
+        <div id="empty-wishlist" style="text-align: center; display: none;">
+            <p style="font-size: 1.2rem; margin-bottom: 20px;">Your wishlist is empty.</p>
+            <a href="index.html" class="btn-primary">Continue Shopping</a>
+        </div>
+    </section>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="copyright">
+            &copy; 2024 Veess'Essence Parfums. All rights reserved.
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

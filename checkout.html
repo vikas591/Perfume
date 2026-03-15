@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Veess'Essence</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">Veess'<span>ESSENCE</span></a>
+            <a href="index.html" class="icon-btn"><i class="fas fa-arrow-left"></i> Back to Shop</a>
+        </div>
+    </nav>
+
+    <!-- Checkout Section -->
+    <section class="container checkout-section">
+        <div class="section-title">
+            <h2>Checkout</h2>
+        </div>
+
+        <div class="checkout-grid">
+            <!-- Shipping Details Form -->
+            <div class="checkout-form">
+                <h3>Shipping Details</h3>
+                <form id="checkout-form" onsubmit="placeOrder(event)">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" required placeholder=" ">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Mobile Number</label>
+                        <input type="tel" id="phone" required placeholder=" ">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address">Delivery Address</label>
+                        <textarea id="address" rows="3" required placeholder=" "></textarea>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" id="city" required placeholder=" ">
+                        </div>
+                        <div class="form-group">
+                            <label for="pincode">Pincode</label>
+                            <input type="text" id="pincode" required placeholder=" ">
+                        </div>
+                    </div>
+
+                    <!-- Payment Section -->
+                    <div class="payment-section">
+                        <h3>Payment Method</h3>
+                        <p class="payment-instruction">Scan the QR code to pay via any UPI App</p>
+
+                        <div class="qr-container">
+                            <!-- Using a placebo QR code for demonstration -->
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=merchant@upi&pn=Veess%20Essence%20Parfums&am=0&cu=INR"
+                                alt="Payment QR Code">
+                        </div>
+                        <p style="margin-top: 10px; margin-bottom: 20px; font-weight: 500;">Choose Your payment option
+                            below: <span style="color: red;">*</span></p>
+                        <p id="payment-error"
+                            style="color: var(--danger-color); display: none; margin-bottom: 10px; font-weight: 600;">
+                            <i class="fas fa-exclamation-circle"></i> Please choose a payment method
+                        </p>
+
+                        <div class="upi-options">
+                            <label class="upi-option">
+                                <input type="radio" name="payment-method" value="GPay" required
+                                    onchange="toggleOtherInput()">
+                                <span class="upi-btn"><i class="fab fa-google-pay"></i> GPay</span>
+                            </label>
+                            <label class="upi-option">
+                                <input type="radio" name="payment-method" value="PhonePe" required
+                                    onchange="toggleOtherInput()">
+                                <span class="upi-btn"><i class="fas fa-mobile-alt"></i> PhonePe</span>
+                            </label>
+                            <label class="upi-option">
+                                <input type="radio" name="payment-method" value="Navi" required
+                                    onchange="toggleOtherInput()">
+                                <span class="upi-btn"><i class="fas fa-wallet"></i> Navi</span>
+                            </label>
+                            <label class="upi-option">
+                                <input type="radio" name="payment-method" value="Others" required
+                                    onchange="toggleOtherInput()">
+                                <span class="upi-btn"><i class="fas fa-ellipsis-h"></i> Others</span>
+                            </label>
+                        </div>
+
+                        <div id="other-payment-div" class="form-group" style="display: none; margin-top: 10px;">
+                            <label for="other-payment-details">Specify Other Payment Method</label>
+                            <input type="text" id="other-payment-details" placeholder="E.g. Paytm, Amazon Pay">
+                        </div>
+
+                        <div class="transaction-section"
+                            style="margin-top: 20px; padding-top: 20px; border-top: 1px dashed var(--border-color);">
+                            <div class="form-group">
+                                <label for="upi-id">UPI Transaction ID <span style="color: red;">*</span></label>
+                                <input type="text" id="upi-id" required
+                                    placeholder="Enter your UPI Transaction ID/Ref No.">
+                            </div>
+                            <div class="whatsapp-warning"
+                                style="background-color: #fff3cd; color: #856404; padding: 10px; border-radius: 4px; font-size: 0.9rem; border: 1px solid #ffeeba;">
+                                <i class="fas fa-exclamation-triangle"></i> <strong>Important:</strong> Upload the
+                                Screenshot with the order in Whatsapp. Then only the order will be shipped.
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="checkout-btn" style="margin-top: 20px;">
+                        <i class="fab fa-whatsapp"></i> Place Order on WhatsApp
+                    </button>
+                </form>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="order-summary">
+                <h3>Order Summary</h3>
+                <div id="checkout-items">
+                    <!-- Checkout items injected here -->
+                </div>
+
+                <div class="summary-total">
+                    <span>Total Amount</span>
+                    <span id="checkout-total">₹0</span>
+                </div>
+                <p style="margin-top: 15px; font-size: 0.8em; color: #666;">
+                    <i class="fas fa-lock"></i> Secure Checkout via WhatsApp
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="copyright">
+            &copy; 2024 Veess'Essence Parfums. All rights reserved.
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

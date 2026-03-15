@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders - Veess'Essence</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .orders-container {
+            padding: 120px 20px 50px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .order-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            overflow: hidden;
+            border: 1px solid #eee;
+        }
+
+        .order-header {
+            background: #f9f9f9;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .order-id {
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .order-date {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .order-body {
+            padding: 20px;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .item-details {
+            display: flex;
+            gap: 15px;
+        }
+
+        .item-details img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .order-footer {
+            padding: 15px 20px;
+            background: #fff;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .order-total {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-placed {
+            background: #e3f2fd;
+            color: #2196f3;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Reuse Nav -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">Veess'<span>ESSENCE</span></a>
+            <div class="nav-icons">
+                <a href="index.html" title="Back to Shop">
+                    <i class="fas fa-arrow-left"></i> Back to Shop
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="orders-container">
+        <h1>My Orders</h1>
+        <div id="orders-list" style="margin-top: 30px;">
+            <!-- Orders injected here -->
+        </div>
+        <div id="no-orders" style="display: none; text-align: center; margin-top: 50px;">
+            <p>You haven't placed any orders yet.</p>
+            <a href="index.html" class="btn-primary" style="margin-top: 15px; display: inline-block;">Start Shopping</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if (!user) {
+                alert('Please login to view your orders.');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            renderOrders(user.email);
+        });
+
+        function renderOrders(email) {
+            const allOrders = JSON.parse(localStorage.getItem('orders')) || [];
+            // Filter orders for current user
+            const userOrders = allOrders.filter(order => order.userEmail === email).reverse(); // Newest first
+
+            const listContainer = document.getElementById('orders-list');
+            const noOrders = document.getElementById('no-orders');
+
+            if (userOrders.length === 0) {
+                noOrders.style.display = 'block';
+                return;
+            }
+
+            listContainer.innerHTML = userOrders.map(order => {
+                const date = new Date(order.date).toLocaleDateString() + ' ' + new Date(order.date).toLocaleTimeString();
+
+                const itemsHtml = order.items.map(item => `
+                    <div class="order-item">
+                        <div class="item-details">
+                            <img src="${item.image}" alt="${item.name}">
+                            <div>
+                                <div style="font-weight: 600;">${item.name}</div>
+                                <div style="font-size: 0.9rem; color: #777;">Size: ${item.size}</div>
+                                <div style="font-size: 0.9rem; color: #777;">Qty: ${item.quantity}</div>
+                            </div>
+                        </div>
+                        <div style="font-weight: 500;">₹${item.price * item.quantity}</div>
+                    </div>
+                `).join('');
+
+                return `
+                    <div class="order-card">
+                        <div class="order-header">
+                            <div>
+                                <div class="order-id">${order.id}</div>
+                                <div class="order-date">${date}</div>
+                            </div>
+                            <span class="status-badge ${order.status === 'Cancelled' ? 'status-cancelled' : 'status-placed'}" 
+                                  style="${order.status === 'Cancelled' ? 'background: #ffebee; color: #f44336;' : ''}">
+                                ${order.status}
+                            </span>
+                        </div>
+                        <div class="order-body">
+                            ${itemsHtml}
+                        </div>
+                        <div class="order-footer">
+                            <div>Payment: ${order.paymentMethod.split('(')[0]}</div>
+                            <div class="order-total">Total: ₹${order.total}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+    </script>
+</body>
+
+</html>
