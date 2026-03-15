@@ -5,7 +5,7 @@ const products = [
         name: "Midnight Rose",
         brand: "Veess'Essence",
         price: 3500,
-        image: "assets/midnight_rose.png",
+        image: "./assets/midnight_rose.png",
         description: "A mysterious blend of brooding florals and dark musk."
     },
     {
@@ -13,7 +13,7 @@ const products = [
         name: "Ocean Breeze",
         brand: "Veess'Essence",
         price: 2800,
-        image: "assets/ocean_breeze.png",
+        image: "./assets/ocean_breeze.png",
         description: "Fresh aquatic notes perfect for daily wear."
     },
     {
@@ -21,7 +21,7 @@ const products = [
         name: "Golden Amber",
         brand: "Veess'Essence",
         price: 4200,
-        image: "assets/golden_amber.png",
+        image: "./assets/golden_amber.png",
         description: "Rich, warm amber notes with a hint of vanilla."
     },
     {
@@ -29,7 +29,7 @@ const products = [
         name: "Citrus Grove",
         brand: "Veess'Essence",
         price: 2500,
-        image: "assets/citrus_grove.png",
+        image: "./assets/citrus_grove.png",
         description: "Zesty lemon and orange blossom scent."
     },
     {
@@ -37,7 +37,7 @@ const products = [
         name: "Velvet Santal",
         brand: "Veess'Essence",
         price: 5000,
-        image: "assets/velvet_santal.png",
+        image: "./assets/velvet_santal.png",
         description: "Smooth sandalwood with spicy undertones."
     },
     {
@@ -45,7 +45,7 @@ const products = [
         name: "Jasmine Bloom",
         brand: "Veess'Essence",
         price: 3200,
-        image: "assets/jasmine_bloom.png",
+        image: "./assets/jasmine_bloom.png",
         description: "Intoxicating white floral fragrance."
     },
     {
@@ -53,7 +53,7 @@ const products = [
         name: "Royal Oud",
         brand: "Veess'Essence",
         price: 5500,
-        image: "assets/royal_oud.png",
+        image: "./assets/royal_oud.png",
         description: "A majestic blend of agarwood and rare spices."
     },
     {
@@ -61,7 +61,7 @@ const products = [
         name: "Vanilla Dreams",
         brand: "Veess'Essence",
         price: 2900,
-        image: "assets/vanilla_dreams.png",
+        image: "./assets/vanilla_dreams.png",
         description: "Warm vanilla bean with a touch of creamy caramel."
     },
     {
@@ -69,7 +69,7 @@ const products = [
         name: "Wild Orchid",
         brand: "Veess'Essence",
         price: 3800,
-        image: "assets/wild_orchid.png",
+        image: "./assets/wild_orchid.png",
         description: "Exotic orchid notes combined with subtle fruitiness."
     }
 ];
